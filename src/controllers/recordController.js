@@ -99,18 +99,18 @@ exports.updateRecord = async (req, res) => {
 exports.deleteRecord = async (req, res) => {
     try {
         const { id } = req.params
-        const record = await Record.findById(id)
-        if (!record) {
+        const existingrecord = await record.findById(id)
+        if (!existingrecord) {
             return res.status(404).json({
                 message: 'record not found'
             })
         }
-        if (record.userId.toString() !== req.user.id) {
+        if (existingrecord.userId.toString() !== req.user.id) {
             return res.status(403).json({
                 message: 'Forbidden: You cannot delete this record'
             })
         }
-        await record.deleteOne()
+        await existingrecord.deleteOne()
         return res.status(200).json({
             message: 'record deleted successfully'
         })
