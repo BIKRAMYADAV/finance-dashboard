@@ -61,3 +61,62 @@ exports.getRecord = async (req, res) => {
         })
     }
 }
+
+exports.updateRecord = async (req, res) => {
+    try {
+        const { id } = req.params
+        const updates = req.body
+        const record = await Record.findById(id)
+        if (!record) {
+            return res.status(404).json({
+                message: 'record not found'
+            })
+        }
+        if (record.userId.toString() !== req.user.id) {
+            return res.status(403).json({
+                message: 'Forbidden: You cannot update this record'
+            })
+        }
+        Object.keys(updates).forEach(key => {
+            record[key] = updates[key]
+        })
+        await record.save()
+        return res.status(200).json({
+            message: 'record updated successfully',
+            data: record
+        })
+    } catch (error) {
+        console.log('error updating record', error)
+        return res.status(500).json({
+            message: 'server error',
+            error
+        })
+    }
+}
+
+exports.deleteRecord = async (req, res) => {
+    try {
+        const { id } = req.params
+        const record = await Record.findById(id)
+        if (!record) {
+            return res.status(404).json({
+                message: 'record not found'
+            })
+        }
+        if (record.userId.toString() !== req.user.id) {
+            return res.status(403).json({
+                message: 'Forbidden: You cannot delete this record'
+            })
+        }
+        await record.deleteOne()
+        return res.status(200).json({
+            message: 'record deleted successfully'
+        })
+    } catch (error) {
+        console.log('error deleting record', error)
+        return res.status(500).json({
+            message: 'server error',
+            error
+        })
+    }
+}
