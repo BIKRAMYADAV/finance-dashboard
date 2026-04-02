@@ -3,13 +3,13 @@ const mongoose = require('mongoose')
 const recordSchema = new mongoose.Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
-        required: true,
+        // required: true,
         ref: 'User'
     }
     ,
     amount : {
         type: Number,
-        required: true 
+        // required: true 
     },
     type : {
         type: String,
@@ -17,11 +17,11 @@ const recordSchema = new mongoose.Schema({
     },
     category: {
         type: String,
-        required: true 
+        // required: true 
     },
     date: {
         type: Date,
-        required: true 
+        // required: true 
     },
     notes: {
         type: String,

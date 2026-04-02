@@ -1,7 +1,7 @@
 exports.authMiddleware = (req, res, next) => {
     try {
         req.user = {
-            id: 'user-1',
+            id: '69ce81e4c6ea33f11b00d42d',
             role:'admin'
         }
         next()

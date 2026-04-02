@@ -1,3 +1,5 @@
+const record = require('../models/recordModel')
+
 exports.createRecord = async (req, res) => {
      try {
         const { amount, type, category, date, notes } = req.body
@@ -6,7 +8,7 @@ exports.createRecord = async (req, res) => {
                 message: 'amount, type, category and date are required'
             })
         }
-        const newRecord = await Record.create({
+        const newRecord = await record.create({
             amount,
             type,
             category,
@@ -48,7 +50,7 @@ exports.getRecord = async (req, res) => {
                 filter.date.$lte = new Date(endDate)
             }
         }
-        const records = await Record.find(filter).sort({date: -1})
+        const records = await record.find(filter).sort({date: -1})
         return res.status(200).json({
             message: 'record retrieved successfully',
             data: records
@@ -66,7 +68,7 @@ exports.updateRecord = async (req, res) => {
     try {
         const { id } = req.params
         const updates = req.body
-        const record = await Record.findById(id)
+        const record = await record.findById(id)
         if (!record) {
             return res.status(404).json({
                 message: 'record not found'
