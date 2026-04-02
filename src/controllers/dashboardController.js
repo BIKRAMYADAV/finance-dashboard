@@ -1,8 +1,8 @@
-const Record = require('../models/recordModel')
+const record = require('../models/recordModel')
 
 exports.summary = async (req, res) => {
     try {
-        const records = await Record.find({userId: req.user.id})
+        const records = await record.find({userId: req.user.id})
         let totalIncome = 0
         let totalExpense = 0
 
