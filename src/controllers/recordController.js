@@ -31,7 +31,7 @@ exports.createRecord = async (req, res) => {
 
 exports.getRecord = async (req, res) => {
     try {
-        const {type, category, endDate, startDate} = req.body 
+        const {type, category, endDate, startDate} = req.query 
         const filter = {
             userId: req.user.id 
         }
@@ -68,24 +68,24 @@ exports.updateRecord = async (req, res) => {
     try {
         const { id } = req.params
         const updates = req.body
-        const record = await record.findById(id)
-        if (!record) {
+        const existingrecord = await record.findById(id)
+        if (!existingrecord) {
             return res.status(404).json({
                 message: 'record not found'
             })
         }
-        if (record.userId.toString() !== req.user.id) {
+        if (existingrecord.userId.toString() !== req.user.id) {
             return res.status(403).json({
                 message: 'Forbidden: You cannot update this record'
             })
         }
         Object.keys(updates).forEach(key => {
-            record[key] = updates[key]
+            existingrecord[key] = updates[key]
         })
-        await record.save()
+        await existingrecord.save()
         return res.status(200).json({
             message: 'record updated successfully',
-            data: record
+            data: existingrecord
         })
     } catch (error) {
         console.log('error updating record', error)
