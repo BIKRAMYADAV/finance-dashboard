@@ -1,3 +1,4 @@
 module.exports = {
-    userAPI : require('./userRoutes')
+    userAPI : require('./userRoutes'),
+    recordAPI: require('./recordRoutes')
 }

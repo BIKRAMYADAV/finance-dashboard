@@ -9,6 +9,7 @@ const app = express()
 const PORT = process.env.PORT
 const MONGO_URI = process.env.MONGO_URI
 
+app.use(express.json())
 expressApp(app)
 connectDB(MONGO_URI)
 
