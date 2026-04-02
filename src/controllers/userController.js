@@ -8,8 +8,9 @@ exports.createUser = async (req, res) => {
                 message: 'name, email and role are required'
             })
         }
-        const userExists = user.findOne({email})
+        const userExists = await user.findOne({email})
         if(userExists){
+            console.log('existing user : ', userExists)
             return res.status(400).json({
                 message: 'user already exists',
             })
@@ -48,29 +49,31 @@ exports.getUser = async (req, res) => {
 
 exports.updateUser = async (req, res) => {
     try {
-        const {id} = req.params 
+        const {_id} = req.params 
+        console.log('id is: ',_id)
         const {role, status} = req.body 
         if(!role && !status) {
             return res.status(400).json({
                 message: 'at least one field (role or status) is required'
             })
         }
-        const existinguser = await user.findById(id)
+        const existinguser = await user.findById(_id)
+        console.log('existing user is', existinguser)
         if(!existinguser){
             return res.status(400).json({
                 message: 'user does not exist'
             })
         }
-        if(role) user.role = role
-        if(status) user.status= status
+        if(role) existinguser.role = role
+        if(status) existinguser.status= status
 
-        await user.save()
+        await existinguser.save()
         return res.status(200).json({
             message: 'user updated successfully',
-            data: user 
+            data: existinguser 
         })
     } catch (error) {
-        console.log('server error')
+        // console.log('server error', error)
         res.status(500).json({
             message: 'server error'
         })
