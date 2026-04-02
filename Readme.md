@@ -43,7 +43,7 @@ It demonstrates backend design, API structuring, role-based access control and d
 
 ## Setup 
     1. Clone Repository
-        git clone <your-repo-link>
+        git clone https://github.com/BIKRAMYADAV/finance-dashboard
         cd finance-dashboard
     2. Install Dependencies
         npm install
@@ -55,7 +55,7 @@ It demonstrates backend design, API structuring, role-based access control and d
             MONGO_URI=your_mongodb_connection_string
     4. Run
         npm start
-        
+
 ## API endpoints
     1. Users
         * POST /users  -> create users
