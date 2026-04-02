@@ -1,4 +1,5 @@
 module.exports = {
     userAPI : require('./userRoutes'),
-    recordAPI: require('./recordRoutes')
+    recordAPI: require('./recordRoutes'),
+    summaryAPI: require('./dashboard-summary')
 }
