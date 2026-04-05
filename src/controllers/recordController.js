@@ -50,10 +50,21 @@ exports.getRecord = async (req, res) => {
                 filter.date.$lte = new Date(endDate)
             }
         }
-        const records = await record.find(filter).sort({date: -1})
+        //pagination code
+        const page = parseInt(req.query.page) || 1
+        const limit = pareseInt(req.query.limit) || 10
+        const skip = (page-1)*limit 
+
+        const records = await record.find(filter).sort({date: -1}).skip(skip).limit(limit)
+        const total = await record.countDocuments(filter)
+
         return res.status(200).json({
             message: 'record retrieved successfully',
-            data: records
+            data: records,
+            pagination: {
+                total, page, 
+                limit, totalPages: Math.ceil(total/limit)
+            }
         })
     } catch (error){
         console.log('There was an error in getting records', error)
