@@ -8,23 +8,44 @@ It demonstrates backend design, API structuring, role-based access control and d
     1. create users
     2. assign roles: viewer, analyst or admin
     3. update status: active or incative
-    4. role based access control
+    4. role based access control\
+
+- Authentication
+    1. user registration and login
+    2. password hashing using bcrypt
+    3. token based authentication using jwt
+
 - Financial records management
     1. create, read, update, delete financial records
     2. filter records by type, category or date
     3. role based access management to records
+    4. Pagination support for large datasets
+
 - Dashboard summary
     1. total income, expenses and net balance aggregated in one route
     2. access only for admin and analysts
     3. category wise breakdowns and recent transactions fetched
+
 - Access control
     1. viewer - read only
     2. analyst - read + analytics
     3. admin - complete access
+
 - Validation & error handling
     1. required field validation
     2. proper http status codes
     3. error handling for different inappropriate operations
+
+- Rate limiting
+    1. prevents api abuse and excess requests
+    2. requests are limited per time window
+
+- Pagination support
+    1. implemented on records API
+    2. query parameters:
+            page -> page number
+            limit -> records per page
+    3. returns pagination metadata (total, pages, etc)
 
 ## Tech Stack
     * Node.js
