@@ -1,14 +1,20 @@
+const jwt = require('jsonwebtoken')
+const dotenv = require('dotenv').config()
+
 exports.authMiddleware = (req, res, next) => {
-    try {
-        req.user = {
-            id: '69ce81e4c6ea33f11b00d42d',
-            role:'admin'
-        }
+    try{
+        const header = req.headers.authorization 
+        if(!header){
+            return res.status(401).json({message: 'unauthorized user'})
+                }
+        const token = header.split(' ')[1]
+        const decoded = jwt.verify(token, process.env.JWT_SECRET)
+        req.user= decoded 
         next()
     } catch (error){
-        console.log('auth middleware error', error)
-        return res.status(500).json({
-            message: 'server error'
+        console.log('There was an error in auth middleware', error)
+        return res.status(401).json({
+            message: 'invalid or expired token'
         })
     }
 }
